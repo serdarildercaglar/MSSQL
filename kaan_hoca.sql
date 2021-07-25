@@ -100,9 +100,11 @@ where A.order_id = B.order_id
 and B.staff_id = C.staff_id;
 
 
-select first_name, last_name,staff_id,year, avg((list_price-discount)*quantity) as avg_list_price from view_table
+select first_name, last_name,staff_id,year, avg((list_price- (list_price*discount))*quantity) as avg_list_price from view_table
 group by year,staff_id,first_name,last_name
 order by year
+
+select * from sales.order_items
 
 -- ikinci yol
 select s.first_name, s.last_name, year(o.order_date) as year, avg((i.list_price-i.discount)*i.quantity) as avg_amountfrom sales.staffs sinner join sales.orders oon s.staff_id=o.staff_idinner join sales.order_items ion o.order_id=i.order_idgroup by s.first_name, s.last_name, year(o.order_date)order by first_name, last_name, year(o.order_date)
