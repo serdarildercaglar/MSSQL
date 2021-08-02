@@ -281,3 +281,12 @@ WHERE	ISNUMERIC (SUBSTRING( street, 3, 1) ) = 1
 
 --In the street column, clear the string characters that were accidentally added to the end of the initial numeric expression.
 
+-- In the street column, clear the string characters that were accidentally added to the end of the initial numeric expression.
+
+-- finding the string char  at the end the of street number 
+select street,right(left(street,CHARINDEX(' ',street)-1),1)
+from sales.customers
+where isnumeric (right(left(street,CHARINDEX(' ',street)-1),1)) = 0
+
+-- final solution
+select street,  (case when isnumeric (right(left(street,CHARINDEX(' ',street)-1),1)) = 0 					then replace(street,(right(left(street,CHARINDEX(' ',street)-1),1)),'')					else street end) new_columnfrom sales.customers
